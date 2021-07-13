@@ -1,4 +1,4 @@
-var xmlHttp   = createXmlHttpRequestObject();
+var xmlHttp = createXmlHttpRequestObject();
 var inProcess = false, timer, lastInput = '', inputType, lastType = '';
 
 function createXmlHttpRequestObject() {
@@ -30,13 +30,13 @@ function process(type) {
 
 		timer = setTimeout(function () {
 			var userInput = document.getElementById(
-					type === 'food' ? 'foodInput' : 'staffInput'
-				)
+				type === 'food' ? 'foodInput' : 'staffInput'
+			)
 				.value.trim();
 
 			if ((lastInput !== userInput) || (type !== lastType)) {
 				lastInput = userInput;
-				lastType  = type;
+				lastType = type;
 				search(userInput);
 			}
 		}, 1500)
@@ -71,14 +71,14 @@ function handleServerResponse() {
 	if (xmlHttp.readyState === 4) {
 		if (xmlHttp.status === 200) {
 			try {
-				var xmlRespone         = xmlHttp.responseXML;
+				var xmlRespone = xmlHttp.responseXML;
 				var xmlDocumentElement = xmlRespone.documentElement;
 				var messageField;
 				var message;
 
 				if (lastType === 'food') {
 					messageField = document.getElementById("belowInputFood");
-					message      = xmlDocumentElement.firstChild.data;
+					message = xmlDocumentElement.firstChild.data;
 				} else {
 					messageField = document.getElementById("belowInputStaff");
 
@@ -89,15 +89,15 @@ function handleServerResponse() {
 						var ssns = xmlDocumentElement
 							.getElementsByTagName('ssn');
 
-						message  = "";
+						message = "";
 
 						for (var i = 0; i < names.length; i++) {
 							var name = names.item(i).firstChild.data;
-							var ssn  = ssns.item(i).firstChild.data;
+							var ssn = ssns.item(i).firstChild.data;
 
 							if (
-								(name.toLowerCase().
-										indexOf(lastInput) !== -1) ||
+								(name.toLowerCase()
+									.indexOf(lastInput) !== -1) ||
 								(ssn.toLowerCase().indexOf(lastInput) !== -1)
 							) {
 								message += name + ' - ' + ssn + "<br>";
@@ -124,12 +124,3 @@ function handleServerResponse() {
 		}
 	}
 }
-
-/*
-references:
-https://stackoverflow.com/questions/452003/cancel-kill-window-settimeout-before-it-happens
-https://stackoverflow.com/questions/29968499/vertical-rulers-in-visual-studio-code
-https://stackoverflow.com/questions/1789945/how-to-check-whether-a-string-contains-a-substring-in-javascript
-https://stackoverflow.com/questions/154862/convert-javascript-string-to-be-all-lower-case
-https://stackoverflow.com/questions/48261998/why-php-strlen-and-javascript-xxx-length-is-not-equal/48262279
-*/
